@@ -20,9 +20,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.robot.commands.drive.HoldStance;
 import frc.robot.subsystems.drive.Drive;
-import frc.robot.subsystems.drive.DriveIO;
-import frc.robot.subsystems.drive.DriveIOSim;
 import frc.robot.subsystems.drive.DriveIOSparkMax;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
@@ -34,7 +33,7 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
  */
 public class RobotContainer {
   // Subsystems
-  private final Drive drive;
+  public static final Drive drive = new Drive(new DriveIOSparkMax());
 
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
@@ -44,22 +43,22 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    switch (Constants.currentMode) {
-      case REAL:
-        // Real robot, instantiate hardware IO implementations
-        drive = new Drive(new DriveIOSparkMax());
-        break;
+    // switch (Constants.currentMode) {
+    //   case REAL:
+    //     // Real robot, instantiate hardware IO implementations
+    //     drive = new Drive(new DriveIOSparkMax());
+    //     break;
 
-      case SIM:
-        // Sim robot, instantiate physics sim IO implementations
-        drive = new Drive(new DriveIOSim());
-        break;
+    //   case SIM:
+    //     // Sim robot, instantiate physics sim IO implementations
+    //     drive = new Drive(new DriveIOSim());
+    //     break;
 
-      default:
-        // Replayed robot, disable IO implementations
-        drive = new Drive(new DriveIO() {});
-        break;
-    }
+    //   default:
+    //     // Replayed robot, disable IO implementations
+    //     drive = new Drive(new DriveIO() {});
+    //     break;
+    // }
 
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
@@ -90,6 +89,7 @@ public class RobotContainer {
     drive.setDefaultCommand(
         Commands.run(
             () -> drive.driveArcade(-controller.getLeftY(), -controller.getRightX()), drive));
+    controller.a().whileTrue(new HoldStance());
   }
 
   /**
