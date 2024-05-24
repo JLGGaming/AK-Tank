@@ -13,9 +13,9 @@
 
 package frc.robot.subsystems.drive;
 
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkLowLevel.MotorType;
-import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
@@ -27,7 +27,7 @@ import edu.wpi.first.wpilibj.SPI;
  * "CANSparkFlex".
  */
 public class DriveIOSparkMax implements DriveIO {
-  private static final double GEAR_RATIO = 10.0;
+  private static final double GEAR_RATIO = 9.13;
   private static final double KP = 1.0; // TODO: MUST BE TUNED, consider using REV Hardware Client
   private static final double KD = 0.0; // TODO: MUST BE TUNED, consider using REV Hardware Client
 
